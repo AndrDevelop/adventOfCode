@@ -7,6 +7,7 @@
 	</head>
 	<body>
 		<p id = "total" style = "color:red;"></p>
+		<p id = "totalRibbon" style = "color:red;"></p>
 		<pre id = "algo">
 			20x3x11
 			15x27x5
@@ -1017,7 +1018,7 @@
 		var strSplit            = str.split("\n");
 		//prism surface plus extra paper (plural because it's an array)
 		var surfaces_ExtraPaper = new Array();
-
+		var ribbonLength = new Array();
 		for (var i = 0; i<strSplit.length; i++)
 		{
 			var prism = strSplit[i].split('x');
@@ -1026,6 +1027,13 @@
 			//collection of each wrapping paper in an array
 			surfaces_ExtraPaper.push(surface_ExtraPaper);
 			//console.log( surfaceArea(prism) );
+
+			//part two
+			//console.log ( smallestPerimeter(prism) );
+			var ribbon = smallestPerimeter(prism) + cubicVolume(prism);
+			ribbonLength.push(ribbon);
+
+			//console.log(smallestSide(prism));
 		}
 
 		//gettinf total squarefeet
@@ -1033,6 +1041,10 @@
 		for(var i = 0; i<surfaces_ExtraPaper.length; i++)
 			totalSquareFeet = totalSquareFeet + surfaces_ExtraPaper[i];
 		document.getElementById('total').innerText = "Total square feet are: " + totalSquareFeet;
+		var totalRibbonLength = 0 ;
+		for(var i = 0; i<ribbonLength.length; i++)
+			totalRibbonLength = totalRibbonLength + ribbonLength[i];
+		document.getElementById('totalRibbon').innerText = "Total ribbon feet are: " + totalRibbonLength;
 		function smallestSide(lwh)
 		{
 			var results = new Array();
@@ -1072,6 +1084,23 @@
 			var result = result + 2 * w * h;
 			var result = result + 2 * h * l;
 			return result;
+		}
+
+		function smallestPerimeter(lwh)
+		{
+			var array = [ parseInt( lwh[0] ), parseInt( lwh[1] ), parseInt(lwh[2]) ]; 
+			array = array.sort(function(a, b) {
+			  return a - b;
+			}); 
+			var perimeter = parseInt( array[1] ) + parseInt( array[1] ) +  parseInt(array[0]) + parseInt(array[0]) ;
+			return perimeter;
+		}
+		function cubicVolume(lwh)
+		{
+			var l      = parseInt(lwh[0]);
+			var w      = parseInt(lwh[1]);
+			var h      = parseInt(lwh[2]);
+			return l * w * h;
 		}
 	</script>
 </html>
